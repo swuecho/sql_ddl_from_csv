@@ -3,15 +3,12 @@ import os
 filename = 'data/Demographic_Statistics_By_Zip_Code.csv'
 table_name = os.path.splitext(os.path.basename(filename))[0]
 
-print(table_name)
 with open(filename, 'r') as csvfile:
 	reader = csv.reader(csvfile)
 	head = reader.next()
 	first_line_data = reader.next()
 
 column_names = [ column_name.replace(' ', '_').lower() for column_name in head]
-print(column_names)
-print(first_line_data)
 
 def is_number(s):
     try:
@@ -37,7 +34,6 @@ column_type  = [data_type(i) for i in first_line_data]
 #);
 
 ddl_first_line = "CREATE TABLE {0}".format(table_name)
-print(ddl_first_line)
 ddl_column_and_type = [ ' '.join([a,b]) for a,b in zip(column_names, column_type)]
-ddl = ddl_first_line + "\n(\n  " + ",\n  ".join(ddl_column_and_type) + "\n)"
+ddl = ddl_first_line + "\n(\n  " + ",\n  ".join(ddl_column_and_type) + "\n);"
 print(ddl)

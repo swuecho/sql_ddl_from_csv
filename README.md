@@ -1,3 +1,10 @@
+```python 
+python peak.py >db.sql
+
+```
+
+
+```
 sqlite> .mode csv
 sqlite> .import ./data/somedata.csv tab1
 
@@ -10,4 +17,5 @@ Enter SQL statements terminated with a ";"
 sqlite> .mode csv
 sqlite> .import data/Demographic_Statistics_By_Zip_Code.csv Demographic_Statistics_By_Zip_Code
 sqlite> 
+```
 
