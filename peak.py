@@ -1,14 +1,5 @@
 import csv
 import os
-filename = 'data/Demographic_Statistics_By_Zip_Code.csv'
-table_name = os.path.splitext(os.path.basename(filename))[0]
-
-with open(filename, 'r') as csvfile:
-	reader = csv.reader(csvfile)
-	head = reader.next()
-	first_line_data = reader.next()
-
-column_names = [ column_name.replace(' ', '_').lower() for column_name in head]
 
 def is_number(s):
     try:
@@ -25,7 +16,17 @@ def data_type(value_str):
 	else:
 		return 'integer'		
 	
-column_type  = [data_type(i) for i in first_line_data]
+filename = 'data/Demographic_Statistics_By_Zip_Code.csv'
+
+def get_ddl(filename):
+    table_name = os.path.splitext(os.path.basename(filename))[0]
+    with open(filename, 'r') as csvfile:
+        reader = csv.reader(csvfile)
+        head = next(reader)
+        first_line_data = next(reader)
+
+    column_names = [ column_name.replace(' ', '_').lower() for column_name in head]
+    column_type  = [data_type(i) for i in first_line_data]
 
 #CREATE TABLE table_name
 #(
@@ -33,7 +34,9 @@ column_type  = [data_type(i) for i in first_line_data]
 #   [...]
 #);
 
-ddl_first_line = "CREATE TABLE {0}".format(table_name)
-ddl_column_and_type = [ ' '.join([a,b]) for a,b in zip(column_names, column_type)]
-ddl = ddl_first_line + "\n(\n  " + ",\n  ".join(ddl_column_and_type) + "\n);"
-print(ddl)
+    ddl_first_line = "CREATE TABLE {0}".format(table_name)
+    ddl_column_and_type = [ ' '.join([a,b]) for a,b in zip(column_names, column_type)]
+    ddl = ddl_first_line + "\n(\n  " + ",\n  ".join(ddl_column_and_type) + "\n);"
+    return(ddl)
+
+print(get_ddl(filename))
