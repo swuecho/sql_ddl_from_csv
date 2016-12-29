@@ -1,7 +1,7 @@
 # turn a csv to a table in postgresql database
+import os
 import pandas
 from sqlalchemy import create_engine
-import os
 
 #db_string = os.environ['DATABASE_URL']
 from os.path import expanduser
